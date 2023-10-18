@@ -1,0 +1,18 @@
+
+#game-box {
+  width: 400px;
+  height: 600px;
+  background-color: black;
+  position: relative /* para poder posicionar elementos del juego dentro de este contenedor */;
+  overflow: hidden; /* los elementos hijos nunca saldran visualmente de este game-box */
+}
+
+#ball {
+  width: 30px;
+  height: 30px;
+  background-color: white;
+  border-radius: 15px;
+  position: absolute; /* para poder moverlo en relacion al game-box */
+  top: 10px;
+  left: 10px;
+}
