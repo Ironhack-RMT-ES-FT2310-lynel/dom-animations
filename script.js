@@ -67,11 +67,18 @@ setInterval(() => {
 
 // EVENTOS
 
+
+// seccion de elementos de DOM
 let moneyNode = document.querySelector("#count span")
 let buttonNode = document.querySelector("#count button")
+let eventTitleNode = document.querySelector("#event-title")
 
+let inputNode = document.querySelector("#name")
+let listBtnNode = document.querySelector("#add-btn")
+let listNode = document.querySelector("#output-list")
 
-buttonNode.addEventListener("click", () => {
+// funciones
+const increaseAmount = () => {
   moneyNode.innerText++
 
   if (moneyNode.innerText >= 10) {
@@ -83,22 +90,97 @@ buttonNode.addEventListener("click", () => {
     moneyNode.style.backgroundColor = "black";
 
   }
-})
+}
 
-
-
-let eventTitleNode = document.querySelector("#event-title")
-
-eventTitleNode.addEventListener("mouseover", () => {
+const changeTitleOver = () => {
   console.log("cursor sobre el titulo")
   eventTitleNode.style.color = "red";
   eventTitleNode.style.backgroundColor = "purple";
   eventTitleNode.style.padding = "20px";
-})
+}
 
-eventTitleNode.addEventListener("mouseleave", () => {
+const changeTitleBack = () => {
   console.log("cursor deja el titulo")
   eventTitleNode.style.color = "purple";
   eventTitleNode.style.backgroundColor = "black";
   eventTitleNode.style.padding = "10px";
+}
+
+// Add Event Listeners
+buttonNode.addEventListener("click", increaseAmount)
+eventTitleNode.addEventListener("mouseover", changeTitleOver)
+eventTitleNode.addEventListener("mouseleave", changeTitleBack)
+listBtnNode.addEventListener("click", () => {
+  console.log(inputNode.value)
+  // en inputs, no hay innerText. Lo que que escribe el usuario se determina con el ".value"
+
+  let newLiNode = document.createElement("li")
+  newLiNode.innerText = inputNode.value
+  listNode.append(newLiNode)
+
+  // o...
+  // listNode.innerHTML += `<li>${inputNode.value}</li>`
+
 })
+
+
+// Recursion
+
+let control = 0;
+
+function imprimirAlgo() {
+  control++
+
+  console.log("imprimiendo")
+
+  if (control <= 200) {
+    // imprimirAlgo() // recursion
+    // requestAnimationFrame es una funcion que nos permite hacer el efecto de recursion en un tiempo delimitado
+    requestAnimationFrame( imprimirAlgo ) // 60 veces por segundo
+  }
+
+}
+
+// imprimirAlgo()
+
+
+
+let gameBoxNode = document.querySelector("#game-box")
+gameBoxNode.style.backgroundColor = "gray"
+gameBoxNode.style.width = "400px"
+gameBoxNode.style.height = "300px"
+gameBoxNode.style.position = "relative" // quiero posicionar elementos internos dentro de esta caja
+
+let boxNode = document.querySelector("#box")
+boxNode.style.width = "30px"
+boxNode.style.height = "30px"
+boxNode.style.backgroundColor = "black"
+boxNode.style.position = "absolute"
+boxNode.style.top = "20px"
+boxNode.style.left = "20px"
+
+let gameControl = 0
+
+let cubeX = 20;
+let cubeY = 20;
+
+function animateGame() {
+  gameControl++
+  console.log(gameControl)
+
+  // movimiento horizontal
+  cubeX++
+  boxNode.style.left = `${cubeX}px`
+
+  // movimiento vertical
+  cubeY++
+  boxNode.style.top = `${cubeY}px`
+
+  if (gameControl <= 200) {
+    // animateGame()
+    requestAnimationFrame(animateGame)
+  }
+
+}
+
+animateGame()
