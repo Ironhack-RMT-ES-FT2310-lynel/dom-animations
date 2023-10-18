@@ -104,3 +104,19 @@ document.addEventListener("keydown", (event) => {
     paddleNode.style.left = `${paddleX}px`
   }
 })
+
+
+
+// BONUS
+
+/* 
+
+- Que el movimiento de la paleta sea automatico
+- Que la paleta no salga del canvas
+- Que la velocidad de la pelota aumente con cada colision
+- Que los colores la pelota y paleta cambien con cada colision o con tiempo
+- Que la paleta se haga más pequeña a medida que el juego avanza
+- Que reinicie el juego
+- tener un contador numero que aumente con cada colision (score)
+
+*/
