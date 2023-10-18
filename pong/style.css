@@ -16,3 +16,12 @@
   top: 10px;
   left: 10px;
 }
+
+#paddle {
+  width: 120px;
+  height: 20px;
+  background-color: white;
+  position: absolute;
+  top: 550px;
+  left: 140px;
+}

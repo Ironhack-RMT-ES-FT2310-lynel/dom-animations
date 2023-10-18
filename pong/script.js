@@ -3,15 +3,23 @@ console.log("probando")
 // elementos de DOM
 let gameBoxNode = document.querySelector("#game-box")
 let ballNode = document.querySelector("#ball")
+let paddleNode = document.querySelector("#paddle")
 
 // variables globales
 let ballX = 10;
 let ballY = 10;
-let ballSpeed = 2.2;
+let ballSpeed = 4;
 let gameBoxWidth = 400;
 let gameBoxHeight = 600;
 let isBallMovingRight = true;
 let isBallMovingDown = true;
+
+let paddleX = 140;
+let paddleY = 550;
+let paddleSpeed = 25;
+// CADA VEZ QUE ACTUALIZAMOS UNA VARIABLE DE POSICION O TAMAÑO DEBEMOS ACTUALIZAR EL DOM => top, left width, height
+
+let isGameOn = true;
 
 // funciones
 function ballMovement() {
@@ -36,7 +44,9 @@ function ballWallCollisionCheck() {
     isBallMovingRight = false;
   } else if (ballY + 30 > gameBoxHeight) {
     // colision abajo
-    isBallMovingDown = false
+    // isBallMovingDown = false
+    isGameOn = false;
+    window.alert("Perdiste :(")
   } else if (ballX < 0) {
     // colision izquierda
     isBallMovingRight = true
@@ -47,18 +57,50 @@ function ballWallCollisionCheck() {
 
 }
 
+function ballPaddleCollision() {
+
+  if (
+    ballY + 30 > paddleY && 
+    ballX > paddleX && 
+    ballX + 30 < paddleX + 120
+  ) {
+    console.log("la pelota paso la paleta")
+    isBallMovingDown = false; // rebota hacia arriba
+  }
+
+}
+
 // recursion
 function gameLoop() {
   // console.log("ejecutando recursion")
 
   ballMovement()
   ballWallCollisionCheck()
+  ballPaddleCollision()
 
   // efecto de recursion
-  requestAnimationFrame( gameLoop )
+  if (isGameOn === true) {
+    requestAnimationFrame( gameLoop ) // lo que genera la recursion
+  }
 
 }
 gameLoop()
 
 
 // addEventListeners
+document.addEventListener("keydown", (event) => {
+  // console.log("presionando una tecla")
+  // event es TODA la informacion del evento que está ocurriendo
+  console.log(event.code)
+  if (event.code === "KeyA") {
+    // moviendo a la izquierda
+    // Pueden condicionar cuando ocurre el movimiento.
+    // si la paleta ya salio del gameBox, entonces no la puedan mover
+    paddleX -= paddleSpeed;
+    paddleNode.style.left = `${paddleX}px`
+  } else if (event.code === "KeyD") {
+    // moviendo a la derecha
+    paddleX += paddleSpeed;
+    paddleNode.style.left = `${paddleX}px`
+  }
+})
